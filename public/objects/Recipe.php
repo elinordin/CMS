@@ -30,9 +30,9 @@ class Recipe {
     }
 
     public function postRecipe($heading, $ingredient, $instructions) : bool{
-        $query = "insert into recipes (heading, ingredient, instructions) values ('$heading','$ingredient','$instructions')"; //this is the query we want to send to MySQL
+        $query = "insert into recipes (heading, ingredient, instructions) values ('$heading','$ingredient','$instructions')";
 
-        $statement = $this->conn->prepare($query); //separates layers for security reasons and returns the pdo-statement from the database
+        $statement = $this->conn->prepare($query);
 
         //executes the statement and evaluates if it was successful
         if ($statement->execute()) {
@@ -43,11 +43,22 @@ class Recipe {
     }
 
     public function deleteRecipe($id) : bool{
-        $query = "delete from recipes where id = '$id'"; //this is the query we want to send to MySQL
+        $query = "delete from recipes where id = '$id'";
 
-        $statement = $this->conn->prepare($query); //separates layers for security reasons and returns the pdo-statement from the database
+        $statement = $this->conn->prepare($query);
 
-        //executes the statement and evaluates if it was successful
+        if ($statement->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function updateRecipe($id, $heading, $ingredient, $instructions) : bool{
+        $query = "update recipes set heading='$heading', ingredient='$ingredient', instructions='$instructions' where id='$id'";
+
+        $statement = $this->conn->prepare($query);
+
         if ($statement->execute()) {
             return true;
         } else {

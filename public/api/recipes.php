@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         //echo = what we send back to the browser
         echo json_encode($final_array); //encodes the final array to json and echo it
     } else {
-        echo 'Oops, no records find, please add a recipe!';
+        echo json_encode(array('message' => 'Oops! No posts find, you need to add a recipe.'));
     }
 }
 
@@ -71,6 +71,24 @@ else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     //the response to our frontend must be encoded into JSON
     if ($final_connection->DeleteRecipe($id)) {
         echo json_encode(array('message' => 'Success, the recipe is now deleted.'));
+    } else {
+        echo json_encode(array('message' => 'Something went wrong, please try again later.'));
+    }
+}
+
+//-----------------------------------------------------PUT-----------------------------------------------------
+else if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    //allows us to read raw data from the request body into a JSON string and then decode the JSON into a variable
+    $input = json_decode(file_get_contents('php://input'));
+
+    $id = $input->id;
+    $heading = $input->heading;
+    $ingredient = $input->ingredient;
+    $instructions = $input->instructions;
+
+    //the response to our frontend must be encoded into JSON
+    if ($final_connection->UpdateRecipe($id, $heading, $ingredient, $instructions)) {
+        echo json_encode(array('message' => 'Success, the recipe is now updated.'));
     } else {
         echo json_encode(array('message' => 'Something went wrong, please try again later.'));
     }
