@@ -1,0 +1,15 @@
+.form-container {
+    position: relative;
+}
+
+.add-recipe-form {
+    visibility: hidden;
+    position: absolute;
+    top:0;
+}
+
+.add-page-form {
+    visibility: hidden;
+    position: absolute;
+    top:0;
+}

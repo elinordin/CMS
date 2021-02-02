@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+</head>
+
+<body class="admin">
+    <h1>Welcome to the admin-page</h1>
+
+    <aside>
+        <ul class="recipes-list">
+
+        </ul>
+    </aside>
+
+    <button class="open-form-btn add-recipe-btn">Add recipe</button>
+    <button class="open-form-btn add-page-btn">Add page</button>
+
+    <div class="form-container">
+        <form class="add-recipe-form" method="post" action="/api/recipes.php">
+            <label>Heading:</label>
+            <input id="recipe-heading" name="heading" required>
+            <label>Ingredient:</label>
+            <input id="recipe-ingredient" name="ingredient" required>
+            <label>Instructions:</label>
+            <input id="recipe-instructions" name="instructions" required>
+            <input type="submit" class="publish-recipe-btn" value="Publish recipe">
+        </form>
+
+        <form class="add-page-form">
+            <label>Page name:</label>
+            <input id="page-name" name="name" required>
+            <label>Content:</label>
+            <input id="page-content" name="content" required>
+            <input type="submit" value="Publish page">
+        </form>
+
+    </div>
+
+</body>
+</html>
