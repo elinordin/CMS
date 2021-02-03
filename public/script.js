@@ -61,7 +61,7 @@ function addRecipeSubmitListener () {
                 alert(response.message)
             })
             .catch(error => {
-                alert("You had an error: " + error.message)
+                alert("POST: You had an error: " + error.message)
             })
         location.reload()
     })
@@ -79,7 +79,7 @@ function addDeleteEventListener() {
                     alert(response.message)
                 })
                 .catch(error => {
-                    alert("You had an error: " + error.message)
+                    alert("DELETE: You had an error: " + error.message)
                 })
             location.reload()
         })
@@ -120,7 +120,7 @@ function addEditEventListener(recipes) {
                         alert(response.message)
                     })
                     .catch(error => {
-                        alert("You had an error: " + error.message)
+                        alert("PUT: You had an error: " + error.message)
                     })
                 location.reload()
             })
