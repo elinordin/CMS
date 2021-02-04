@@ -28,7 +28,7 @@
 
 
             <div class="form-container">
-                <form id="add-recipe-form" method="post" action="/api/recipes.php">
+                <form id="add-recipe-form">
                     <label>Heading:</label>
                     <input name="heading" required>
                     <label>Ingredient:</label>
@@ -53,6 +53,14 @@
                     <input name="ingredient" required>
                     <label>Instructions:</label>
                     <textarea name="instructions" rows="10" required></textarea>
+                    <input type="submit" class="publish-recipe-btn form-btn" value="Update recipe">
+                </form>
+
+                <form id="edit-page-form">
+                    <label>Page name:</label>
+                    <input name="name" required>
+                    <label>Content:</label>
+                    <textarea name="content" rows="10" required></textarea>
                     <input type="submit" class="publish-recipe-btn form-btn" value="Update recipe">
                 </form>
             </div>

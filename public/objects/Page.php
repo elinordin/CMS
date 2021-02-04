@@ -42,7 +42,7 @@ class Page {
     }
 
     public function deletePage($id) : bool{
-        $query = "delete from page where id = '$id'";
+        $query = "delete from pages where id = '$id'";
 
         $statement = $this->conn->prepare($query);
 
