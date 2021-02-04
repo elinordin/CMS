@@ -1,17 +1,26 @@
 let recipesURL = "http://localhost:8080/api/recipes.php"
 let pagesURL = "http://localhost:8080/api/pages.php"
+let recipesArray
+let pagesArray
 let body = document.querySelector("body")
+let main = document.querySelector("main")
+
 
 runSite()
 
 async function runSite() {
     try {
-        let recipesArray = (await getData(recipesURL)).recipes
-        let pagesArray = (await getData(pagesURL)).pages
+        recipesArray = (await getData(recipesURL)).recipes
+        pagesArray = (await getData(pagesURL)).pages
 
         //----------------------------------------INDEX----------------------------------------
         if (body.classList.contains("index")) {
-            displayRecipeCards(recipesArray)
+            displayNavbar()
+            navEventListener()
+
+            if (main.classList.contains("home")) {
+                displayRecipeCards()
+            }
         }
 
         //----------------------------------------ADMIN----------------------------------------
@@ -25,8 +34,8 @@ async function runSite() {
             addRecipeSubmitListener()
             addPageSubmitListener()
 
-            displayList(display, recipesArray, pagesArray)
-            formButtonEventListener(display, recipesArray, pagesArray, recipesURL, pagesURL)
+            displayList(display)
+            formButtonEventListener(display, recipesURL, pagesURL)
 
             if (display.recipes) {
                 addDeleteEventListener(recipesURL)
@@ -44,13 +53,26 @@ async function runSite() {
 }
 
 //---------------------------------EVENT LISTENERS---------------------------------
-function formButtonEventListener (display, recipesArray, pagesArray, recipesURL, pagesURL) {
+function navEventListener() {
+    let navBtns = document.querySelectorAll(".nav-btn")
+    navBtns.forEach(function (btn) {
+        btn.addEventListener("click", function(e){
+            let clickedBtn = e.target
+            let clickedId = e.target.id
+
+            addClassToMain(clickedBtn)
+            replaceContent(clickedId)
+        })
+    })
+}
+
+function formButtonEventListener (display, recipesURL, pagesURL) {
     const openFormBtns = Array.from(document.querySelectorAll(".open-form-btn"))
     openFormBtns.forEach(function (btn) {
         btn.addEventListener("click", function(e){
             let clickedBtn = e.target
             display = displayForm(clickedBtn, display)
-            displayList(display, recipesArray, pagesArray)
+            displayList(display)
 
             if (display.recipes) {
                 addDeleteEventListener(recipesURL)
@@ -281,34 +303,70 @@ function getClickedBtn(clickedBtn) {
     return clickedBtn
 }
 
+function displayNavbar() {
+    const pageList = document.querySelector(".page-list")
 
-function displayRecipeCards(recipes) {
-    const recipesContainer = document.querySelector(".recipes-container")
+    pagesArray.forEach(page => {
+        let listItem = document.createElement("li")
+        listItem.innerHTML = `<button class="nav-btn" id="${page.id}">${page.name}</button>`
+        pageList.appendChild(listItem)
+    })
+}
 
-    recipes.forEach(recipe => {
+function addClassToMain(clickedBtn) {
+    let contentOfBtn = (clickedBtn.innerHTML).split(' ').join('-')
+    main.className = contentOfBtn
+}
+
+function displayRecipeCards() {
+    let recipesContainer = document.querySelector(".recipes-container")
+    recipesContainer.innerHTML = ""
+
+    recipesArray.forEach(recipe => {
         let recipeCard = document.createElement("div")
+        recipeCard.className = "recipe-card"
         recipeCard.id = recipe.id
         recipeCard.innerHTML = `` +
             `<h2>${recipe.heading}</h2>` +
-            `<p>${recipe.ingredient}</p>` +
+            `<p>Ingredient: ${recipe.ingredient}</p>` +
             `<p>${recipe.instructions}</p>`
         recipesContainer.appendChild(recipeCard)
     })
 }
 
+function replaceContent(clickedId) {
+    let classNameOfMain = main.className
+    let heading = document.querySelector(".index-heading")
 
-function displayList(display, recipes, pages) {
+    if (classNameOfMain === "home") {
+        heading.innerHTML = "Your one ingredient cookbook: "
+        displayRecipeCards()
+    } else {
+        let pageToDisplay = pagesArray.find(function(page) {
+            if(page.id === clickedId) {
+                return true
+            }
+        })
+
+        heading.innerHTML = pageToDisplay.name
+        main.innerHTML = `<div class="recipes-container"><p>${pageToDisplay.content}</p></div>`
+    }
+    history.replaceState(null, '', classNameOfMain)
+}
+
+
+function displayList(display) {
     const asideList = document.querySelector(".aside-list")
     asideList.innerHTML = ""
 
     if (display.recipes) {
-        recipes.forEach(recipe => {
+        recipesArray.forEach(recipe => {
             let listItem = document.createElement("li")
             listItem.innerHTML = `${recipe.heading} <div class="button-wrapper" id=${recipe.id}><button class="delete-btn"><i class="fas fa-trash-alt"></i></button><button class="edit-btn"><i class="far fa-edit"></i></button></div>`
             asideList.appendChild(listItem)
         })
     } else if (display.pages) {
-        pages.forEach(page => {
+        pagesArray.forEach(page => {
             let listItem = document.createElement("li")
             listItem.innerHTML = `${page.name} <div class="button-wrapper" id=${page.id}><button class="delete-btn"><i class="fas fa-trash-alt"></i></button><button class="edit-btn"><i class="far fa-edit"></i></button></div>`
             asideList.appendChild(listItem)
