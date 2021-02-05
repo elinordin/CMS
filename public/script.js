@@ -33,6 +33,8 @@ async function runSite() {
 
             addRecipeSubmitListener()
             addPageSubmitListener()
+            addEditRecipeSubmitListener()
+            addEditPageSubmitListener()
 
             displayList(display)
             formButtonEventListener(display, recipesURL, pagesURL)
@@ -99,11 +101,11 @@ function addRecipeSubmitListener () {
         handleData(recipesURL, "POST", inputData)
             .then(response => {
                 alert(response.message)
+                location.reload()
             })
             .catch(error => {
                 alert("POST: You had an error: " + error.message)
             })
-        location.reload()
     })
 }
 
@@ -120,11 +122,11 @@ function addPageSubmitListener () {
         handleData(pagesURL, "POST", inputData)
             .then(response => {
                 alert(response.message)
+                location.reload()
             })
             .catch(error => {
                 alert("POST: You had an error: " + error.message)
             })
-        location.reload()
     })
 }
 
@@ -138,11 +140,11 @@ function addDeleteEventListener(url) {
             handleData(url, "DELETE", clickedId)
                 .then(response => {
                     alert(response.message)
+                    location.reload()
                 })
                 .catch(error => {
                     alert("DELETE: You had an error: " + error.message)
                 })
-            location.reload()
         })
     })
 }
@@ -162,19 +164,17 @@ function addEditEventListener(display, data) {
             })
 
             displayForm(clickedBtn, display, dataToEdit)
-            addEditRecipeSubmitListener(clickedId)
-            addEditPageSubmitListener(clickedId)
         })
     })
 }
 
-function addEditRecipeSubmitListener(clickedId) {
+function addEditRecipeSubmitListener() {
     let editRecipeForm = document.querySelector("#edit-recipe-form")
     editRecipeForm.addEventListener("submit", function(event) {
         event.preventDefault()
 
         let editData = {
-            id: clickedId,
+            id: editRecipeForm.elements["id"].value,
             heading: editRecipeForm.elements["heading"].value,
             ingredient: editRecipeForm.elements["ingredient"].value,
             instructions: editRecipeForm.elements["instructions"].value
@@ -183,11 +183,11 @@ function addEditRecipeSubmitListener(clickedId) {
         handleData(recipesURL,"PUT", editData)
             .then(response => {
                 alert(response.message)
+                location.reload()
             })
             .catch(error => {
                 alert("PUT: You had an error: " + error.message)
             })
-        location.reload()
     })
 }
 
@@ -197,7 +197,7 @@ function addEditPageSubmitListener(clickedId) {
         event.preventDefault()
 
         let editData = {
-            id: clickedId,
+            id: editPageForm.elements["id"].value,
             name: editPageForm.elements["name"].value,
             content: editPageForm.elements["content"].value,
         }
@@ -205,11 +205,11 @@ function addEditPageSubmitListener(clickedId) {
         handleData(pagesURL,"PUT", editData)
             .then(response => {
                 alert(response.message)
+                location.reload()
             })
             .catch(error => {
                 alert("PUT: You had an error: " + error.message)
             })
-        location.reload()
     })
 }
 
@@ -282,6 +282,7 @@ function displayForm(clickedBtn, display, dataToEdit) {
             editPageForm.style.visibility = "hidden"
             asideHeading.innerHTML = "Recipes"
 
+            editRecipeForm.elements["id"].value = dataToEdit.id
             editRecipeForm.elements["heading"].value = dataToEdit.heading
             editRecipeForm.elements["ingredient"].value = dataToEdit.ingredient
             editRecipeForm.elements["instructions"].value = dataToEdit.instructions
@@ -290,6 +291,7 @@ function displayForm(clickedBtn, display, dataToEdit) {
             editPageForm.style.visibility = "visible"
             asideHeading.innerHTML = "Pages"
 
+            editPageForm.elements["id"].value = dataToEdit.id
             editPageForm.elements["name"].value = dataToEdit.name
             editPageForm.elements["content"].value = dataToEdit.content
         }

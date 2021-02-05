@@ -30,37 +30,39 @@
             <div class="form-container">
                 <form id="add-recipe-form">
                     <label>Heading:</label>
-                    <input name="heading" required>
+                    <input name="heading" maxlength="20" required>
                     <label>Ingredient:</label>
-                    <input name="ingredient" required>
+                    <input name="ingredient" maxlength="20" required>
                     <label>Instructions:</label>
-                    <textarea name="instructions" rows="10" required></textarea>
+                    <textarea name="instructions" rows="10" maxlength="450" required></textarea>
                     <input type="submit" class="publish-recipe-btn form-btn" value="Publish recipe">
                 </form>
 
                 <form id="add-page-form">
                     <label>Page name:</label>
-                    <input name="name" required>
+                    <input name="name" maxlength="20" required>
                     <label>Content:</label>
-                    <textarea name="content" rows="10" required></textarea>
+                    <textarea name="content" rows="10" maxlength="450" required></textarea>
                     <input type="submit" class="form-btn" value="Publish page">
                 </form>
 
                 <form id="edit-recipe-form">
+                    <input type="hidden" name="id" required>
                     <label>Heading:</label>
-                    <input name="heading" required>
+                    <input name="heading" maxlength="20" required>
                     <label>Ingredient:</label>
-                    <input name="ingredient" required>
+                    <input name="ingredient" maxlength="20" required>
                     <label>Instructions:</label>
-                    <textarea name="instructions" rows="10" required></textarea>
+                    <textarea name="instructions" rows="10" maxlength="450" required></textarea>
                     <input type="submit" class="publish-recipe-btn form-btn" value="Update recipe">
                 </form>
 
                 <form id="edit-page-form">
+                    <input type="hidden" name="id" required>
                     <label>Page name:</label>
-                    <input name="name" required>
+                    <input name="name" maxlength="20" required>
                     <label>Content:</label>
-                    <textarea name="content" rows="10" required></textarea>
+                    <textarea name="content" rows="10" maxlength="450" required></textarea>
                     <input type="submit" class="publish-recipe-btn form-btn" value="Update recipe">
                 </form>
             </div>

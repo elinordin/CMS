@@ -84,6 +84,8 @@ else if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $name = $input->name;
     $content = $input->content;
 
+
+
     //the response to our frontend must be encoded into JSON
     if ($final_connection->UpdatePage($id, $name, $content)) {
         echo json_encode(array('message' => 'Success, the page is now updated.'));

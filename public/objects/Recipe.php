@@ -56,8 +56,8 @@ class Recipe {
 
     public function updateRecipe($id, $heading, $ingredient, $instructions) : bool{
         $query = "update recipes set heading='$heading', ingredient='$ingredient', instructions='$instructions' where id='$id'";
-
         $statement = $this->conn->prepare($query);
+
 
         if ($statement->execute()) {
             return true;
