@@ -157,11 +157,7 @@ function addEditEventListener(display, data) {
             let clickedBtn = getClickedBtn(e.target)
             let clickedId = clickedBtn.parentNode.id
 
-            let dataToEdit = data.find(function(item) {
-                if(item.id === clickedId) {
-                    return true
-                }
-            })
+            let dataToEdit = data.find( ({ id }) => id === clickedId );
 
             displayForm(clickedBtn, display, dataToEdit)
         })
@@ -344,11 +340,7 @@ function replaceContent(clickedId) {
         heading.innerHTML = "Your one ingredient cookbook: "
         displayRecipeCards()
     } else {
-        let pageToDisplay = pagesArray.find(function(page) {
-            if(page.id === clickedId) {
-                return true
-            }
-        })
+        let pageToDisplay = pagesArray.find( ({ id }) => id === clickedId );
 
         heading.innerHTML = pageToDisplay.name
         main.innerHTML = `<div class="recipes-container"><p>${pageToDisplay.content}</p></div>`
